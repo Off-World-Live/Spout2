@@ -34,26 +34,37 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 
 	# Copy Win32 binaries to the BUILD/Binaries folder
 	add_custom_command(TARGET SpoutLibrary POST_BUILD
-		COMMAND ${CMAKE_COMMAND} -E 
+		COMMAND ${CMAKE_COMMAND} -E
 		copy ${CMAKE_CURRENT_BINARY_DIR}/${ConfigOutputDirectory}SpoutLibrary.lib ${CMAKE_BINARY_DIR}/Binaries/Win32/SpoutLibrary.lib
 	)
 	add_custom_command(TARGET SpoutLibrary POST_BUILD
-	    COMMAND ${CMAKE_COMMAND} -E 
+	    COMMAND ${CMAKE_COMMAND} -E
 		copy $<TARGET_FILE:SpoutLibrary> ${CMAKE_BINARY_DIR}/Binaries/Win32/SpoutLibrary.dll
 	)
+	if(CMAKE_BUILD_TYPE MATCHES DEBUG)
+		add_custom_command(TARGET SpoutLibrary POST_BUILD
+		    COMMAND ${CMAKE_COMMAND} -E
+			copy $<TARGET_PDB_FILE:SpoutLibrary> ${CMAKE_BINARY_DIR}/Binaries/Win32/SpoutLibrary.pdb
+		)
+	endif(CMAKE_BUILD_TYPE MATCHES DEBUG)
 
 else()
 
 	# Copy x64 binaries to the BUILD/Binaries folder
 	add_custom_command(TARGET SpoutLibrary POST_BUILD
-		COMMAND ${CMAKE_COMMAND} -E 
+		COMMAND ${CMAKE_COMMAND} -E
 		copy ${CMAKE_CURRENT_BINARY_DIR}/${ConfigOutputDirectory}SpoutLibrary.lib ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutLibrary.lib
 	)
 	add_custom_command(TARGET SpoutLibrary POST_BUILD
-	    COMMAND ${CMAKE_COMMAND} -E 
+	    COMMAND ${CMAKE_COMMAND} -E
 		copy $<TARGET_FILE:SpoutLibrary> ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutLibrary.dll
 	)
-
+	if(CMAKE_BUILD_TYPE MATCHES DEBUG)
+		add_custom_command(TARGET SpoutLibrary POST_BUILD
+		    COMMAND ${CMAKE_COMMAND} -E
+			copy $<TARGET_PDB_FILE:SpoutLibrary> ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutLibrary.pdb
+		)
+	endif(CMAKE_BUILD_TYPE MATCHES DEBUG)
 endif()
 
 
