@@ -40,12 +40,12 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 	    COMMAND ${CMAKE_COMMAND} -E
 		copy $<TARGET_FILE:SpoutDX> ${CMAKE_BINARY_DIR}/Binaries/Win32/SpoutDX.dll
 	)
-	if(CMAKE_BUILD_TYPE MATCHES DEBUG)
+	if(CMAKE_BUILD_TYPE MATCHES Debug)
 		add_custom_command(TARGET SpoutDX POST_BUILD
 			COMMAND ${CMAKE_COMMAND} -E
 			copy $<TARGET_PDB_FILE:SpoutDX> ${CMAKE_BINARY_DIR}/Binaries/Win32/SpoutDX.pdb
 		)
-	endif(CMAKE_BUILD_TYPE MATCHES DEBUG)
+	endif(CMAKE_BUILD_TYPE MATCHES Debug)
 
 else()
 
@@ -58,12 +58,12 @@ else()
 		COMMAND ${CMAKE_COMMAND} -E
 		copy $<TARGET_FILE:SpoutDX> ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutDX.dll
 	)
-	if(CMAKE_BUILD_TYPE MATCHES DEBUG)
+	#if(CMAKE_BUILD_TYPE MATCHES Debug)
 		add_custom_command(TARGET SpoutDX POST_BUILD
 			COMMAND ${CMAKE_COMMAND} -E
 			copy $<TARGET_PDB_FILE:SpoutDX> ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutDX.pdb
 		)
-	endif(CMAKE_BUILD_TYPE MATCHES DEBUG)
+	#endif(CMAKE_BUILD_TYPE MATCHES Debug)
 
 endif()
 

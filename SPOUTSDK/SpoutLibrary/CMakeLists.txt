@@ -59,12 +59,12 @@ else()
 	    COMMAND ${CMAKE_COMMAND} -E
 		copy $<TARGET_FILE:SpoutLibrary> ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutLibrary.dll
 	)
-	if(CMAKE_BUILD_TYPE MATCHES DEBUG)
+	#if(CMAKE_BUILD_TYPE MATCHES DEBUG)
 		add_custom_command(TARGET SpoutLibrary POST_BUILD
 		    COMMAND ${CMAKE_COMMAND} -E
 			copy $<TARGET_PDB_FILE:SpoutLibrary> ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutLibrary.pdb
 		)
-	endif(CMAKE_BUILD_TYPE MATCHES DEBUG)
+	#endif(CMAKE_BUILD_TYPE MATCHES DEBUG)
 endif()
 
 

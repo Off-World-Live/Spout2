@@ -116,12 +116,12 @@ else()
 		COMMAND ${CMAKE_COMMAND} -E
 		copy ${CMAKE_CURRENT_BINARY_DIR}/${ConfigOutputDirectory}Spout.lib ${CMAKE_BINARY_DIR}/Binaries/x64/Spout.lib
 	)
-	if(CMAKE_BUILD_TYPE MATCHES DEBUG)
+	#if(CMAKE_BUILD_TYPE MATCHES Debug)
 		add_custom_command(TARGET Spout POST_BUILD
 			COMMAND ${CMAKE_COMMAND} -E
 			copy $<TARGET_PDB_FILE:Spout> ${CMAKE_BINARY_DIR}/Binaries/x64/Spout.pdb
 		)
-	endif(CMAKE_BUILD_TYE MATCHES DEBUG)
+	#endif(CMAKE_BUILD_TYE MATCHES Debug)
 
 
 endif()
