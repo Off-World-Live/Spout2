@@ -7,17 +7,18 @@
 #          - Support single config generators (ninja, etc) by Joakim Kilby     #
 #/-------------------------------------- . -----------------------------------\#
 
-add_library(SpoutDX SHARED 
-  SpoutDX.h
-  SpoutDX.cpp
+add_library(SpoutDX12 SHARED 
+  SpoutDX12.h
+  SpoutDX12.cpp
 )
 
-target_link_libraries(SpoutDX
+target_link_libraries(SpoutDX12
   PRIVATE 
     Spout_static
+		SpoutDX
 )
 
-target_compile_definitions(SpoutDX
+target_compile_definitions(SpoutDX12
   PRIVATE
     SPOUT_BUILD_DLL
     SPOUTLIBRARY_EXPORTS
@@ -32,34 +33,25 @@ endif()
 if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 
 	# Copy Win32 binaries to the BUILD/Binaries folder
-	add_custom_command(TARGET SpoutDX POST_BUILD
+	add_custom_command(TARGET SpoutDX12 POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E 
-		copy ${CMAKE_CURRENT_BINARY_DIR}/${ConfigOutputDirectory}SpoutDX.lib ${CMAKE_BINARY_DIR}/Binaries/Win32/SpoutDX.lib
+		copy ${CMAKE_CURRENT_BINARY_DIR}/${ConfigOutputDirectory}SpoutDX12.lib ${CMAKE_BINARY_DIR}/Binaries/Win32/SpoutDX12.lib
 	)
-	add_custom_command(TARGET SpoutDX POST_BUILD
+	add_custom_command(TARGET SpoutDX12 POST_BUILD
 	    COMMAND ${CMAKE_COMMAND} -E 
-		copy $<TARGET_FILE:SpoutDX> ${CMAKE_BINARY_DIR}/Binaries/Win32/SpoutDX.dll
+		copy $<TARGET_FILE:SpoutDX12> ${CMAKE_BINARY_DIR}/Binaries/Win32/SpoutDX12.dll
 	)
 
 else()
 
 	# Copy x64 binaries to the BUILD/Binaries folder
-	add_custom_command(TARGET SpoutDX POST_BUILD
+	add_custom_command(TARGET SpoutDX12 POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E 
-		copy ${CMAKE_CURRENT_BINARY_DIR}/${ConfigOutputDirectory}SpoutDX.lib ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutDX.lib
+		copy ${CMAKE_CURRENT_BINARY_DIR}/${ConfigOutputDirectory}SpoutDX12.lib ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutDX12.lib
 	)
-	add_custom_command(TARGET SpoutDX POST_BUILD
+	add_custom_command(TARGET SpoutDX12 POST_BUILD
 	    COMMAND ${CMAKE_COMMAND} -E 
-		copy $<TARGET_FILE:SpoutDX> ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutDX.dll
+		copy $<TARGET_FILE:SpoutDX12> ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutDX12.dll
 	)
 
-endif()
-
-
-# Examples
-if(SPOUT_BUILD_SPOUTDX_EXAMPLES)
-  add_subdirectory(Tutorial04)
-  add_subdirectory(Tutorial07)
-  add_subdirectory(Windows/Sender)
-  add_subdirectory(Windows/Receiver)
 endif()
