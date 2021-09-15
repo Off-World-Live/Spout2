@@ -55,6 +55,8 @@ target_compile_definitions(SpoutDX_static PRIVATE SPOUT_BUILD_DLL )
 add_library(SpoutDX SHARED 
   SpoutDX.h
   SpoutDX.cpp
+	SpoutDX12/SpoutDX12.h
+	SpoutDX12/SpoutDX12.cpp
 )
 
 target_link_libraries(SpoutDX
