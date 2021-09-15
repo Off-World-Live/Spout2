@@ -7,7 +7,7 @@
 #          - Support single config generators (ninja, etc) by Joakim Kilby     #
 #/-------------------------------------- . -----------------------------------\#
 
-add_library(SpoutDX SHARED
+add_library(SpoutDX SHARED 
   SpoutDX.h
   SpoutDX.cpp
 	SpoutDX12/SpoutDX12.h
@@ -15,7 +15,7 @@ add_library(SpoutDX SHARED
 )
 
 target_link_libraries(SpoutDX
-  PRIVATE
+  PRIVATE 
     Spout_static
 )
 
@@ -35,37 +35,25 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 
 	# Copy Win32 binaries to the BUILD/Binaries folder
 	add_custom_command(TARGET SpoutDX POST_BUILD
-		COMMAND ${CMAKE_COMMAND} -E
+		COMMAND ${CMAKE_COMMAND} -E 
 		copy ${CMAKE_CURRENT_BINARY_DIR}/${ConfigOutputDirectory}SpoutDX.lib ${CMAKE_BINARY_DIR}/Binaries/Win32/SpoutDX.lib
 	)
 	add_custom_command(TARGET SpoutDX POST_BUILD
-	    COMMAND ${CMAKE_COMMAND} -E
+	    COMMAND ${CMAKE_COMMAND} -E 
 		copy $<TARGET_FILE:SpoutDX> ${CMAKE_BINARY_DIR}/Binaries/Win32/SpoutDX.dll
 	)
-	if(CMAKE_BUILD_TYPE MATCHES Debug)
-		add_custom_command(TARGET SpoutDX POST_BUILD
-			COMMAND ${CMAKE_COMMAND} -E
-			copy $<TARGET_PDB_FILE:SpoutDX> ${CMAKE_BINARY_DIR}/Binaries/Win32/SpoutDX.pdb
-		)
-	endif(CMAKE_BUILD_TYPE MATCHES Debug)
 
 else()
 
 	# Copy x64 binaries to the BUILD/Binaries folder
 	add_custom_command(TARGET SpoutDX POST_BUILD
-		COMMAND ${CMAKE_COMMAND} -E
+		COMMAND ${CMAKE_COMMAND} -E 
 		copy ${CMAKE_CURRENT_BINARY_DIR}/${ConfigOutputDirectory}SpoutDX.lib ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutDX.lib
 	)
 	add_custom_command(TARGET SpoutDX POST_BUILD
-		COMMAND ${CMAKE_COMMAND} -E
+	    COMMAND ${CMAKE_COMMAND} -E 
 		copy $<TARGET_FILE:SpoutDX> ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutDX.dll
 	)
-	#if(CMAKE_BUILD_TYPE MATCHES Debug)
-		add_custom_command(TARGET SpoutDX POST_BUILD
-			COMMAND ${CMAKE_COMMAND} -E
-			copy $<TARGET_PDB_FILE:SpoutDX> ${CMAKE_BINARY_DIR}/Binaries/x64/SpoutDX.pdb
-		)
-	#endif(CMAKE_BUILD_TYPE MATCHES Debug)
 
 endif()
 
