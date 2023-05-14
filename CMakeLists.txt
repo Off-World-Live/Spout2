@@ -56,6 +56,7 @@ OPTION(SPOUT_BUILD_SPOUTDX_EXAMPLES "Build SpoutDX examples" OFF)
 OPTION(SPOUT_BUILD_SPOUTDX "Build SpoutDX DirectX11 support library" OFF)
 if(SPOUT_BUILD_SPOUTDX OR SPOUT_BUILD_SPOUTDX_EXAMPLES)
 add_subdirectory(SPOUTSDK/SpoutDirectX/SpoutDX)
+add_subdirectory(SPOUTSDK/SpoutDirectX/SpoutDX/SpoutDX12)
 endif()
 
 # Install option check boxes
