@@ -16,22 +16,22 @@
 
 	Copyright (c) 2020-2022. Lynn Jarvis. All rights reserved.
 
-	Redistribution and use in source and binary forms, with or without modification, 
+	Redistribution and use in source and binary forms, with or without modification,
 	are permitted provided that the following conditions are met:
 
-		1. Redistributions of source code must retain the above copyright notice, 
+		1. Redistributions of source code must retain the above copyright notice,
 		   this list of conditions and the following disclaimer.
 
-		2. Redistributions in binary form must reproduce the above copyright notice, 
-		   this list of conditions and the following disclaimer in the documentation 
+		2. Redistributions in binary form must reproduce the above copyright notice,
+		   this list of conditions and the following disclaimer in the documentation
 		   and/or other materials provided with the distribution.
 
-	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"	AND ANY 
-	EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-	OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE	ARE DISCLAIMED. 
-	IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
-	INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
-	PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"	AND ANY
+	EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+	OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE	ARE DISCLAIMED.
+	IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+	INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+	PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 	INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 	LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
@@ -68,6 +68,8 @@ spoutDX12::~spoutDX12() {
 	if (m_pd3dDevice11) m_pd3dDevice11->Release();
 	if (m_pd3dDeviceContext11) m_pd3dDeviceContext11->Release();
 	if (m_pd3d11On12Device) m_pd3d11On12Device->Release();
+	if (m_pReceivedResource11) m_pReceivedResource11->Release();
+	if (m_pAdapterDX12) m_pAdapterDX12->Release();
 
 }
 
@@ -358,12 +360,12 @@ bool spoutDX12::WrapDX12Resource(ID3D12Resource* pDX12Resource, ID3D11Resource**
 	}
 
 	// Create a wrapped resource to access our d3d12 resource from the d3d11 device
-	// Note: D3D12_RESOURCE_STATE variables are: 
+	// Note: D3D12_RESOURCE_STATE variables are:
 	//    (1) the state of the d3d12 resource when we acquire it
 	//        (when the d3d12 pipeline is finished with it and we are ready to use it in d3d11)
 	//        D3D12_RESOURCE_STATE_COPY_DEST for receiving texture
 	//        D3D12_RESOURCE_STATE_RENDER_TARGET for a sender (or as required by the application)
-	//    (2) when we are done using it in d3d11 (we release it back to d3d12) 
+	//    (2) when we are done using it in d3d11 (we release it back to d3d12)
 	//        these are the states our resource will be transitioned into
 	hr = m_pd3d11On12Device->CreateWrappedResource(
 		pDX12Resource, // A pointer to an already-created D3D12 resource or heap.
@@ -403,11 +405,11 @@ void spoutDX12::UpdateWrappedResource(ID3D11Resource* pWrappedResource, ID3D11Re
 
 // Function: CreateDX12texture
 // Create a D3D12 texture resource.
-bool spoutDX12::CreateDX12texture(ID3D12Device* pd3dDevice12, 
-										unsigned int width, 
+bool spoutDX12::CreateDX12texture(ID3D12Device* pd3dDevice12,
+										unsigned int width,
 										unsigned int height,
 										D3D12_RESOURCE_STATES InitialState,
-										DXGI_FORMAT format, 
+										DXGI_FORMAT format,
 										ID3D12Resource** ppTexture)
 {
 	if (!pd3dDevice12) {
@@ -557,7 +559,7 @@ ID3D12Device* spoutDX12::CreateDX12device()
 		GetHardwareAdapter(factory1, &m_pAdapterDX12);
 		factory1->Release();
 	}
-	
+
 	hRes = D3D12CreateDevice(m_pAdapterDX12,
 		D3D_FEATURE_LEVEL_11_0,
 		_uuidof(ID3D12Device),
